@@ -162,3 +162,4 @@ export class FormalDFA {
     return latex;
   }
 }
+

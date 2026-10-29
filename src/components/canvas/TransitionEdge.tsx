@@ -32,20 +32,20 @@ export const TransitionEdge: React.FC<EdgeProps> = memo(({
     targetX,
     targetY,
     targetPosition,
-    borderRadius: 16,
+    borderRadius: 20,
   });
 
-  let strokeColor = '#334155';
-  let strokeWidth = 1.8;
+  let strokeColor = '#2b3d63';
+  let strokeWidth = 2.2;
   let strokeDasharray = undefined;
 
   if (isFailed) {
-    strokeColor = '#ef4444';
-    strokeWidth = 2.5;
+    strokeColor = '#ff2a5f';
+    strokeWidth = 3.2;
   } else if (isActive) {
-    strokeColor = '#06b6d4';
-    strokeWidth = 3;
-    strokeDasharray = '5 5';
+    strokeColor = '#00d4ff';
+    strokeWidth = 3.5;
+    strokeDasharray = '6 6';
   }
 
   return (
@@ -58,7 +58,12 @@ export const TransitionEdge: React.FC<EdgeProps> = memo(({
           stroke: strokeColor,
           strokeWidth,
           strokeDasharray,
-          transition: 'all 0.3s ease',
+          transition: 'all 0.25s ease',
+          filter: isActive
+            ? 'drop-shadow(0 0 8px rgba(0, 212, 255, 0.7))'
+            : isFailed
+            ? 'drop-shadow(0 0 8px rgba(255, 42, 95, 0.7))'
+            : undefined,
         }}
       />
       <EdgeLabelRenderer>
@@ -68,17 +73,17 @@ export const TransitionEdge: React.FC<EdgeProps> = memo(({
             transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
             pointerEvents: 'all',
           }}
-          className="nodrag nopan"
+          className="nodrag nopan z-20"
         >
           <div
-            className={`px-2 py-0.5 rounded-md font-mono text-[10px] font-medium border shadow-sm transition-all duration-300 backdrop-blur-md ${
+            className={`px-2.5 py-1 rounded-md font-mono text-xs font-semibold border shadow-md transition-all duration-300 backdrop-blur-md ${
               isFailed
-                ? 'bg-rose-950/90 text-rose-200 border-rose-500/60 shadow-[0_0_10px_rgba(239,68,68,0.4)]'
+                ? 'bg-[#1e0811] text-neon-rose border-neon-rose shadow-[0_0_12px_rgba(255,42,95,0.5)] font-bold scale-105'
                 : isActive
-                ? 'bg-cyan-950/90 text-cyan-200 border-cyan-400/80 shadow-[0_0_12px_rgba(6,182,212,0.5)] font-bold scale-110'
-                : 'bg-[#111827]/90 text-slate-300 border-slate-700/80 hover:border-slate-500 hover:text-white'
+                ? 'bg-[#041a2f] text-neon-blue border-neon-blue shadow-[0_0_16px_rgba(0,212,255,0.6)] font-bold scale-110 ring-1 ring-neon-blue/60'
+                : 'bg-void-900/95 text-slate-300 border-void-border hover:border-neon-blue/50 hover:text-white'
             }`}
-            title={`Transition on: ${event}`}
+            title={`Transition event: ${event}`}
           >
             {event}
           </div>

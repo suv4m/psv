@@ -121,3 +121,4 @@ export class LogStreamParser {
     return this.protocol.alphabet.slice(0, 4).map((evt, idx) => `[${formatTime(idx)}] [SYSTEM] Event processed: ${evt}`).join('\n');
   }
 }
+

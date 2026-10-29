@@ -7,9 +7,7 @@ import {
   Sparkles,
   AlertTriangle,
   Plus,
-  ArrowRight,
   ListOrdered,
-  XCircle,
 } from 'lucide-react';
 
 interface TraceVerifierTabProps {
@@ -52,29 +50,28 @@ export const TraceVerifierTab: React.FC<TraceVerifierTabProps> = ({
     if (protocol.id === 'tcp-rfc793') {
       const sample = valid
         ? 'ACTIVE_OPEN, RCV_SYN_ACK, SEND_DATA, RCV_DATA, CLOSE_APP, RCV_ACK, RCV_FIN, TIMEOUT_2MSL'
-        : 'ACTIVE_OPEN, SEND_DATA'; // Illegal SEND_DATA before ESTABLISHED!
+        : 'ACTIVE_OPEN, SEND_DATA';
       setTraceInput(sample);
       onRunValidation(parseInputTokens(sample));
     } else if (protocol.id === 'oauth2-pkce') {
       const sample = valid
         ? 'GEN_CODE_VERIFIER, REDIRECT_TO_AUTH_SERVER, USER_APPROVES_CONSENT, RECEIVE_AUTH_CODE, POST_TOKEN_WITH_VERIFIER, TOKEN_SUCCESS, ACCESS_API_RESOURCE, REVOKE_TOKEN'
-        : 'GEN_CODE_VERIFIER, POST_TOKEN_WITH_VERIFIER'; // Skipped user consent & auth code
+        : 'GEN_CODE_VERIFIER, POST_TOKEN_WITH_VERIFIER';
       setTraceInput(sample);
       onRunValidation(parseInputTokens(sample));
     } else if (protocol.id === 'tls13-handshake') {
       const sample = valid
         ? 'SEND_CLIENT_HELLO, RCV_SERVER_HELLO, RCV_ENCRYPTED_EXTENSIONS, VERIFY_SERVER_CERT, RCV_SERVER_FINISHED, SEND_CLIENT_FINISHED, APP_DATA_TX, SEND_CLOSE_NOTIFY'
-        : 'SEND_CLIENT_HELLO, APP_DATA_TX'; // Trying to send unencrypted app data before handshake!
+        : 'SEND_CLIENT_HELLO, APP_DATA_TX';
       setTraceInput(sample);
       onRunValidation(parseInputTokens(sample));
     } else if (protocol.id === 'iso8583-atm') {
       const sample = valid
         ? 'INSERT_CARD, SUBMIT_PIN, SELECT_SAVINGS, ENTER_AMOUNT, SEND_0200_REQ, RCV_0210_APPROVED, DISPENSE_CASH_OK, PRINT_RECEIPT, EJECT_CARD'
-        : 'INSERT_CARD, DISPENSE_CASH_OK'; // Trying to dispense cash without PIN or authorization!
+        : 'INSERT_CARD, DISPENSE_CASH_OK';
       setTraceInput(sample);
       onRunValidation(parseInputTokens(sample));
     } else {
-      // Default
       const sample = valid
         ? protocol.transitions.slice(0, 3).map((t) => t.event).join(', ')
         : `${protocol.transitions[0]?.event}, ${protocol.alphabet[protocol.alphabet.length - 1]}`;
@@ -84,11 +81,8 @@ export const TraceVerifierTab: React.FC<TraceVerifierTabProps> = ({
   };
 
   const handleApplyRecoveryTrace = (recoveryTrace: EventSymbol[]) => {
-    // Append recovery steps cleanly
     const current = parseInputTokens(traceInput);
-    // Remove the failed event if it was invalid
     if (validationResult?.failureStep) {
-      // Keep everything before the failure step
       const validPrefix = current.slice(0, validationResult.failureStep.stepIndex - 1);
       const repaired = [...validPrefix, ...recoveryTrace];
       const joined = repaired.join(', ');
@@ -104,34 +98,34 @@ export const TraceVerifierTab: React.FC<TraceVerifierTabProps> = ({
 
   return (
     <div className="flex flex-col gap-4 p-4 overflow-y-auto max-h-full">
-      {/* Sample Quick-Loaders */}
+      {/* Sleek Action Bar */}
       <div className="flex items-center justify-between gap-2">
-        <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-          Demo Presets
+        <span className="text-xs font-mono text-slate-400">
+          Trace Verification
         </span>
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2">
           <button
             onClick={() => handleLoadSample(true)}
-            className="flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/25 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg bg-emerald-500/15 text-neon-emerald border border-neon-emerald/30 hover:bg-emerald-500/25 transition-all shadow-sm"
           >
-            <Sparkles className="w-3 h-3 text-emerald-400" />
-            <span>Valid Happy Path</span>
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Valid Path</span>
           </button>
           <button
             onClick={() => handleLoadSample(false)}
-            className="flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-lg bg-rose-500/15 text-rose-300 border border-rose-500/30 hover:bg-rose-500/25 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg bg-rose-500/15 text-neon-rose border border-neon-rose/30 hover:bg-rose-500/25 transition-all shadow-sm"
           >
-            <AlertTriangle className="w-3 h-3 text-rose-400" />
+            <AlertTriangle className="w-3.5 h-3.5" />
             <span>Injected Fault</span>
           </button>
         </div>
       </div>
 
       {/* Trace Input Box */}
-      <div className="space-y-1.5">
+      <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-xs font-mono text-slate-300">
-            Event Trace Sequence (Σ*)
+          <label className="text-xs font-mono font-semibold text-slate-300">
+            Event Sequence Trace (Σ*)
           </label>
           {traceInput && (
             <button
@@ -139,7 +133,7 @@ export const TraceVerifierTab: React.FC<TraceVerifierTabProps> = ({
                 setTraceInput('');
                 onRunValidation([]);
               }}
-              className="text-[11px] text-slate-500 hover:text-slate-300 transition-colors"
+              className="text-xs text-slate-400 hover:text-slate-200 transition-colors"
             >
               Clear
             </button>
@@ -150,15 +144,15 @@ export const TraceVerifierTab: React.FC<TraceVerifierTabProps> = ({
           value={traceInput}
           onChange={(e) => setTraceInput(e.target.value)}
           placeholder="e.g. ACTIVE_OPEN, RCV_SYN_ACK, SEND_DATA..."
-          className="w-full bg-[#080c14] border border-slate-700/80 rounded-lg p-2.5 text-xs font-mono text-slate-200 placeholder-slate-600 focus:outline-none focus:border-cyan-500 transition-colors resize-none"
+          className="w-full bg-void-950 border border-void-border rounded-xl p-3 text-sm font-mono text-slate-100 placeholder-slate-600 focus:outline-none focus:border-neon-blue focus:shadow-neon-blue transition-all resize-none"
         />
         <div className="flex items-center justify-between pt-1">
-          <span className="text-[11px] text-slate-500 font-mono">
-            {parseInputTokens(traceInput).length} token(s) specified
+          <span className="text-xs text-slate-400 font-mono">
+            {parseInputTokens(traceInput).length} event token(s)
           </span>
           <button
             onClick={handleValidate}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-500 text-slate-950 font-semibold text-xs hover:bg-cyan-400 transition-all shadow-[0_0_15px_rgba(6,182,212,0.3)]"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-neon-blue text-void-950 font-bold text-xs hover:bg-cyan-300 transition-all shadow-neon-blue"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
             <span>Execute & Verify</span>
@@ -167,17 +161,17 @@ export const TraceVerifierTab: React.FC<TraceVerifierTabProps> = ({
       </div>
 
       {/* Alphabet Symbol Quick Palette */}
-      <div className="space-y-1.5">
-        <span className="text-[11px] font-mono text-slate-400 flex items-center gap-1">
-          <Plus className="w-3 h-3 text-cyan-400" />
+      <div className="space-y-2">
+        <span className="text-xs font-mono font-medium text-slate-400 flex items-center gap-1.5">
+          <Plus className="w-3.5 h-3.5 text-neon-blue" />
           Click to Append Alphabet Symbol (Σ):
         </span>
-        <div className="flex flex-wrap gap-1 max-h-28 overflow-y-auto p-1.5 bg-[#080c14] rounded-lg border border-slate-800 scrollbar-thin">
+        <div className="flex flex-wrap gap-1.5 max-h-32 overflow-y-auto p-2 bg-void-950 rounded-xl border border-void-border scrollbar-thin">
           {protocol.alphabet.map((sym) => (
             <button
               key={sym}
               onClick={() => handleAddSymbol(sym)}
-              className="px-2 py-0.5 rounded bg-slate-800/80 border border-slate-700 hover:border-cyan-500/70 hover:text-cyan-200 hover:bg-cyan-950/40 text-[10px] font-mono text-slate-300 transition-all"
+              className="px-2.5 py-1 rounded-lg bg-void-850 border border-void-border hover:border-neon-blue hover:text-neon-blue text-xs font-mono font-medium text-slate-300 transition-all"
             >
               +{sym}
             </button>
@@ -185,7 +179,7 @@ export const TraceVerifierTab: React.FC<TraceVerifierTabProps> = ({
         </div>
       </div>
 
-      {/* Diagnostics Card Output */}
+      {/* Diagnostics Card */}
       {validationResult && (
         <DiagnosticsCard
           validationResult={validationResult}
@@ -196,22 +190,22 @@ export const TraceVerifierTab: React.FC<TraceVerifierTabProps> = ({
       {/* Trace History Execution Log Table */}
       {validationResult && validationResult.history.length > 0 && (
         <div className="space-y-2">
-          <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-300">
-            <ListOrdered className="w-4 h-4 text-cyan-400" />
-            <span>Trace Execution Log (δ transitions)</span>
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-200">
+            <ListOrdered className="w-4 h-4 text-neon-blue" />
+            <span>Trace Execution Steps</span>
           </div>
-          <div className="border border-slate-800 rounded-lg overflow-hidden">
+          <div className="border border-void-border rounded-xl overflow-hidden shadow-md">
             <table className="w-full text-left text-xs font-mono">
-              <thead className="bg-[#141d30] text-slate-400 border-b border-slate-800 text-[10px] uppercase">
+              <thead className="bg-void-850 text-slate-400 border-b border-void-border text-xs uppercase">
                 <tr>
-                  <th className="py-1.5 px-2.5">#</th>
-                  <th className="py-1.5 px-2">From</th>
-                  <th className="py-1.5 px-2">Event (a)</th>
-                  <th className="py-1.5 px-2">Next δ(q,a)</th>
-                  <th className="py-1.5 px-2">Status</th>
+                  <th className="py-2 px-3">#</th>
+                  <th className="py-2 px-2.5">From</th>
+                  <th className="py-2 px-2.5">Event (a)</th>
+                  <th className="py-2 px-2.5">Next δ</th>
+                  <th className="py-2 px-2.5">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 bg-[#0e1524]">
+              <tbody className="divide-y divide-void-border bg-void-900">
                 {validationResult.history.map((step) => {
                   const isCurrent = currentStepIndex === step.stepIndex;
                   return (
@@ -220,31 +214,31 @@ export const TraceVerifierTab: React.FC<TraceVerifierTabProps> = ({
                       onClick={() => onSelectStep(step.stepIndex)}
                       className={`cursor-pointer transition-colors ${
                         isCurrent
-                          ? 'bg-cyan-950/40 text-cyan-200'
-                          : 'hover:bg-slate-800/40 text-slate-300'
+                          ? 'bg-blue-950/60 text-neon-blue'
+                          : 'hover:bg-void-850 text-slate-300'
                       }`}
                     >
-                      <td className="py-1.5 px-2.5 font-bold text-slate-500">
+                      <td className="py-2 px-3 font-bold text-slate-500">
                         {step.stepIndex}
                       </td>
-                      <td className="py-1.5 px-2 text-slate-300 truncate max-w-[80px]" title={step.fromState}>
+                      <td className="py-2 px-2.5 text-slate-200 font-semibold truncate max-w-[90px]" title={step.fromState}>
                         {step.fromState}
                       </td>
-                      <td className="py-1.5 px-2 text-cyan-300 truncate max-w-[100px]" title={step.event}>
+                      <td className="py-2 px-2.5 text-neon-blue font-semibold truncate max-w-[110px]" title={step.event}>
                         {step.event}
                       </td>
-                      <td className="py-1.5 px-2 truncate max-w-[80px]" title={step.toState || '⊥'}>
+                      <td className="py-2 px-2.5 truncate max-w-[90px]" title={step.toState || '⊥'}>
                         {step.toState ? (
-                          <span className="text-slate-300">{step.toState}</span>
+                          <span className="text-slate-200 font-medium">{step.toState}</span>
                         ) : (
-                          <span className="text-rose-400 font-bold">TRAP ⊥</span>
+                          <span className="text-neon-rose font-bold">TRAP ⊥</span>
                         )}
                       </td>
-                      <td className="py-1.5 px-2">
+                      <td className="py-2 px-2.5">
                         {step.status === 'VALID' ? (
-                          <span className="text-emerald-400 font-bold text-[10px]">OK</span>
+                          <span className="text-neon-emerald font-bold">OK</span>
                         ) : (
-                          <span className="text-rose-400 font-bold text-[10px]">VIOLATION</span>
+                          <span className="text-neon-rose font-bold">VIOLATION</span>
                         )}
                       </td>
                     </tr>

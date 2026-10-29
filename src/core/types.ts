@@ -85,3 +85,4 @@ export interface ParsedLogEntry {
   isMatched: boolean;
   metadata?: Record<string, string>;
 }
+

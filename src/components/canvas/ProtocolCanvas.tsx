@@ -18,7 +18,7 @@ import dagre from 'dagre';
 import { ProtocolDefinition, StateId } from '../../core/types';
 import { StateNode, StateNodeData } from './StateNode';
 import { TransitionEdge, TransitionEdgeData } from './TransitionEdge';
-import { Maximize2, LayoutGrid, RotateCw } from 'lucide-react';
+import { Maximize2, LayoutGrid } from 'lucide-react';
 
 const nodeTypes = {
   stateNode: StateNode,
@@ -46,13 +46,14 @@ const getLayoutedElements = (
   const dagreGraph = new dagre.graphlib.Graph();
   dagreGraph.setDefaultEdgeLabel(() => ({}));
 
-  const nodeWidth = 200;
-  const nodeHeight = 85;
+  const nodeWidth = 240;
+  const nodeHeight = 105;
 
   dagreGraph.setGraph({
     rankdir: direction,
-    nodesep: 45,
-    ranksep: 90,
+    nodesep: 75,
+    ranksep: 130,
+    edgesep: 35,
   });
 
   nodes.forEach((node) => {
@@ -91,7 +92,6 @@ const CanvasInner: React.FC<ProtocolCanvasProps> = ({
   const [direction, setDirection] = useState<'LR' | 'TB'>('LR');
   const { fitView } = useReactFlow();
 
-  // Construct raw nodes and edges from protocol definition
   const rawNodes: Node[] = useMemo(() => {
     return protocol.states.map((state) => {
       const isInitial = protocol.initialState === state;
@@ -121,9 +121,7 @@ const CanvasInner: React.FC<ProtocolCanvasProps> = ({
   }, [protocol, activeState, failedState, coveredStates]);
 
   const rawEdges: Edge[] = useMemo(() => {
-    // Group identical transitions to prevent overlapping edge clutter
     return protocol.transitions.map((t, index) => {
-      const isSelfLoop = t.from === t.to;
       const isActive =
         activeTransition?.from === t.from &&
         activeTransition?.event === t.event &&
@@ -150,15 +148,14 @@ const CanvasInner: React.FC<ProtocolCanvasProps> = ({
         animated: isActive,
         markerEnd: {
           type: MarkerType.ArrowClosed,
-          width: 14,
-          height: 14,
-          color: isFailed ? '#ef4444' : isActive ? '#06b6d4' : '#475569',
+          width: 16,
+          height: 16,
+          color: isFailed ? '#ff2a5f' : isActive ? '#00d4ff' : '#3b527e',
         },
       };
     });
   }, [protocol, activeTransition, failedTransition, coveredTransitions]);
 
-  // Compute Dagre layout
   const { nodes: layoutedNodes, edges: layoutedEdges } = useMemo(() => {
     return getLayoutedElements(rawNodes, rawEdges, direction);
   }, [rawNodes, rawEdges, direction]);
@@ -166,17 +163,15 @@ const CanvasInner: React.FC<ProtocolCanvasProps> = ({
   const [nodes, setNodes, onNodesChange] = useNodesState(layoutedNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(layoutedEdges);
 
-  // Synchronize when layouted changes
   useEffect(() => {
     setNodes(layoutedNodes);
     setEdges(layoutedEdges);
   }, [layoutedNodes, layoutedEdges, setNodes, setEdges]);
 
-  // Re-fit view when protocol changes
   useEffect(() => {
     const timer = setTimeout(() => {
-      fitView({ padding: 0.2, duration: 400 });
-    }, 50);
+      fitView({ padding: 0.15, duration: 400 });
+    }, 60);
     return () => clearTimeout(timer);
   }, [protocol.id, direction, fitView]);
 
@@ -185,7 +180,7 @@ const CanvasInner: React.FC<ProtocolCanvasProps> = ({
   }, []);
 
   return (
-    <div className="relative w-full h-full bg-[#080c14] select-none">
+    <div className="relative w-full h-full bg-void-950 select-none">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -194,65 +189,65 @@ const CanvasInner: React.FC<ProtocolCanvasProps> = ({
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         fitView
-        minZoom={0.2}
-        maxZoom={2.0}
+        minZoom={0.3}
+        maxZoom={2.5}
         attributionPosition="bottom-left"
       >
-        <Background variant={BackgroundVariant.Dots} gap={20} size={1} color="#1e293b" />
+        <Background variant={BackgroundVariant.Dots} gap={24} size={1.2} color="#15223e" />
         <Controls showInteractive={false} position="top-right" />
         <MiniMap
           nodeColor={(n) => {
             const data = n.data as unknown as StateNodeData;
-            if (data?.isFailed) return '#ef4444';
-            if (data?.isActive) return '#06b6d4';
-            if (data?.isFinal) return '#a855f7';
-            if (data?.isInitial) return '#10b981';
-            return '#1e293b';
+            if (data?.isFailed) return '#ff2a5f';
+            if (data?.isActive) return '#00d4ff';
+            if (data?.isFinal) return '#b55fe6';
+            if (data?.isInitial) return '#00ff9d';
+            return '#1a2744';
           }}
-          maskColor="rgba(8, 12, 20, 0.75)"
+          maskColor="rgba(3, 7, 18, 0.85)"
           position="bottom-right"
-          className="!w-32 !h-24 !bg-[#0e1524] !border !border-slate-800"
+          className="!w-36 !h-28 !bg-void-900 !border !border-void-border"
         />
       </ReactFlow>
 
-      {/* Floating Canvas Quick Controls */}
-      <div className="absolute top-4 left-4 z-10 flex items-center gap-2 bg-[#0e1524]/90 backdrop-blur-md border border-slate-800 p-1.5 rounded-lg shadow-xl">
+      {/* Floating Canvas Controls */}
+      <div className="absolute top-4 left-4 z-10 flex items-center gap-2 bg-void-900/90 backdrop-blur-md border border-void-border p-1.5 rounded-lg shadow-xl">
         <button
           onClick={toggleDirection}
-          className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-slate-300 hover:text-cyan-300 hover:bg-slate-800/80 rounded transition-colors"
-          title="Toggle Hierarchical Orientation (Horizontal LR vs Vertical TB)"
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-neon-blue hover:bg-void-850 rounded transition-colors"
+          title="Toggle Layout Orientation (Horizontal LR vs Vertical TB)"
         >
-          <LayoutGrid className="w-3.5 h-3.5 text-cyan-400" />
-          <span>Layout: {direction === 'LR' ? 'Horizontal (LR)' : 'Vertical (TB)'}</span>
+          <LayoutGrid className="w-3.5 h-3.5 text-neon-blue" />
+          <span>Layout: {direction === 'LR' ? 'Horizontal' : 'Vertical'}</span>
         </button>
 
-        <div className="w-[1px] h-4 bg-slate-700/60" />
+        <div className="w-[1px] h-4 bg-void-border" />
 
         <button
-          onClick={() => fitView({ padding: 0.2, duration: 300 })}
-          className="p-1 text-slate-400 hover:text-white hover:bg-slate-800/80 rounded transition-colors"
-          title="Reset Zoom & Center Canvas"
+          onClick={() => fitView({ padding: 0.15, duration: 300 })}
+          className="p-1.5 text-slate-400 hover:text-white hover:bg-void-850 rounded transition-colors"
+          title="Reset Zoom & Center View"
         >
-          <Maximize2 className="w-3.5 h-3.5" />
+          <Maximize2 className="w-4 h-4 text-slate-300" />
         </button>
       </div>
 
-      {/* Legend Badge */}
-      <div className="absolute bottom-4 left-4 z-10 flex items-center gap-3 bg-[#0e1524]/85 backdrop-blur-md border border-slate-800/80 px-3 py-1.5 rounded-lg text-[11px] text-slate-400 font-mono">
-        <div className="flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-emerald-400" />
+      {/* Clean Legend */}
+      <div className="absolute bottom-4 left-4 z-10 flex items-center gap-3.5 bg-void-900/90 backdrop-blur-md border border-void-border px-3.5 py-1.5 rounded-lg text-xs text-slate-300 font-mono">
+        <div className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-neon-emerald" />
           <span>q₀ Initial</span>
         </div>
-        <div className="flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-purple-400" />
-          <span>F Accepting</span>
+        <div className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-neon-purple" />
+          <span>F Accept</span>
         </div>
-        <div className="flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+        <div className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-neon-blue animate-pulse" />
           <span>Active</span>
         </div>
-        <div className="flex items-center gap-1">
-          <span className="w-2 h-2 rounded-full bg-rose-500" />
+        <div className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-neon-rose" />
           <span>Violation</span>
         </div>
       </div>

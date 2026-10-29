@@ -31,3 +31,4 @@
     { "from": "SESSION_REVOKED", "event": "GEN_CODE_VERIFIER", "to": "CHALLENGE_GENERATED" }
   ]
 }
+
