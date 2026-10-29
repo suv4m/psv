@@ -3,7 +3,6 @@ import { ProtocolDefinition, ValidationResult, EventSymbol } from '../../core/ty
 import { DiagnosticsCard } from './DiagnosticsCard';
 import {
   Play,
-  RotateCcw,
   Sparkles,
   AlertTriangle,
   Plus,
@@ -106,14 +105,14 @@ export const TraceVerifierTab: React.FC<TraceVerifierTabProps> = ({
         <div className="flex items-center gap-2">
           <button
             onClick={() => handleLoadSample(true)}
-            className="flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg bg-emerald-500/15 text-neon-emerald border border-neon-emerald/30 hover:bg-emerald-500/25 transition-all shadow-sm"
+            className="flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg bg-mint-500/15 text-mint-400 border border-mint-500/30 hover:bg-mint-500/25 transition-all shadow-sm"
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>Valid Path</span>
           </button>
           <button
             onClick={() => handleLoadSample(false)}
-            className="flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg bg-rose-500/15 text-neon-rose border border-neon-rose/30 hover:bg-rose-500/25 transition-all shadow-sm"
+            className="flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-lg bg-ruby-500/15 text-ruby-400 border border-ruby-500/30 hover:bg-ruby-500/25 transition-all shadow-sm"
           >
             <AlertTriangle className="w-3.5 h-3.5" />
             <span>Injected Fault</span>
@@ -144,7 +143,7 @@ export const TraceVerifierTab: React.FC<TraceVerifierTabProps> = ({
           value={traceInput}
           onChange={(e) => setTraceInput(e.target.value)}
           placeholder="e.g. ACTIVE_OPEN, RCV_SYN_ACK, SEND_DATA..."
-          className="w-full bg-void-950 border border-void-border rounded-xl p-3 text-sm font-mono text-slate-100 placeholder-slate-600 focus:outline-none focus:border-neon-blue focus:shadow-neon-blue transition-all resize-none"
+          className="w-full bg-graphite-950 border border-graphite-border rounded-xl p-3 text-sm font-mono text-slate-100 placeholder-slate-600 focus:outline-none focus:border-gold-400 focus:shadow-gold-glow transition-all resize-none"
         />
         <div className="flex items-center justify-between pt-1">
           <span className="text-xs text-slate-400 font-mono">
@@ -152,7 +151,7 @@ export const TraceVerifierTab: React.FC<TraceVerifierTabProps> = ({
           </span>
           <button
             onClick={handleValidate}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-neon-blue text-void-950 font-bold text-xs hover:bg-cyan-300 transition-all shadow-neon-blue"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gold-500 text-graphite-950 font-bold text-xs hover:bg-gold-400 transition-all shadow-gold-glow"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
             <span>Execute & Verify</span>
@@ -163,15 +162,15 @@ export const TraceVerifierTab: React.FC<TraceVerifierTabProps> = ({
       {/* Alphabet Symbol Quick Palette */}
       <div className="space-y-2">
         <span className="text-xs font-mono font-medium text-slate-400 flex items-center gap-1.5">
-          <Plus className="w-3.5 h-3.5 text-neon-blue" />
+          <Plus className="w-3.5 h-3.5 text-gold-400" />
           Click to Append Alphabet Symbol (Σ):
         </span>
-        <div className="flex flex-wrap gap-1.5 max-h-32 overflow-y-auto p-2 bg-void-950 rounded-xl border border-void-border scrollbar-thin">
+        <div className="flex flex-wrap gap-1.5 max-h-32 overflow-y-auto p-2 bg-graphite-950 rounded-xl border border-graphite-border scrollbar-thin">
           {protocol.alphabet.map((sym) => (
             <button
               key={sym}
               onClick={() => handleAddSymbol(sym)}
-              className="px-2.5 py-1 rounded-lg bg-void-850 border border-void-border hover:border-neon-blue hover:text-neon-blue text-xs font-mono font-medium text-slate-300 transition-all"
+              className="px-2.5 py-1 rounded-lg bg-graphite-850 border border-graphite-border hover:border-gold-400 hover:text-gold-400 text-xs font-mono font-medium text-slate-300 transition-all"
             >
               +{sym}
             </button>
@@ -191,12 +190,12 @@ export const TraceVerifierTab: React.FC<TraceVerifierTabProps> = ({
       {validationResult && validationResult.history.length > 0 && (
         <div className="space-y-2">
           <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-200">
-            <ListOrdered className="w-4 h-4 text-neon-blue" />
+            <ListOrdered className="w-4 h-4 text-gold-400" />
             <span>Trace Execution Steps</span>
           </div>
-          <div className="border border-void-border rounded-xl overflow-hidden shadow-md">
+          <div className="border border-graphite-border rounded-xl overflow-hidden shadow-md">
             <table className="w-full text-left text-xs font-mono">
-              <thead className="bg-void-850 text-slate-400 border-b border-void-border text-xs uppercase">
+              <thead className="bg-graphite-850 text-slate-400 border-b border-graphite-border text-xs uppercase">
                 <tr>
                   <th className="py-2 px-3">#</th>
                   <th className="py-2 px-2.5">From</th>
@@ -205,7 +204,7 @@ export const TraceVerifierTab: React.FC<TraceVerifierTabProps> = ({
                   <th className="py-2 px-2.5">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-void-border bg-void-900">
+              <tbody className="divide-y divide-graphite-border bg-graphite-900">
                 {validationResult.history.map((step) => {
                   const isCurrent = currentStepIndex === step.stepIndex;
                   return (
@@ -214,8 +213,8 @@ export const TraceVerifierTab: React.FC<TraceVerifierTabProps> = ({
                       onClick={() => onSelectStep(step.stepIndex)}
                       className={`cursor-pointer transition-colors ${
                         isCurrent
-                          ? 'bg-blue-950/60 text-neon-blue'
-                          : 'hover:bg-void-850 text-slate-300'
+                          ? 'bg-amber-950/40 text-gold-400'
+                          : 'hover:bg-graphite-850 text-slate-300'
                       }`}
                     >
                       <td className="py-2 px-3 font-bold text-slate-500">
@@ -224,21 +223,21 @@ export const TraceVerifierTab: React.FC<TraceVerifierTabProps> = ({
                       <td className="py-2 px-2.5 text-slate-200 font-semibold truncate max-w-[90px]" title={step.fromState}>
                         {step.fromState}
                       </td>
-                      <td className="py-2 px-2.5 text-neon-blue font-semibold truncate max-w-[110px]" title={step.event}>
+                      <td className="py-2 px-2.5 text-gold-400 font-semibold truncate max-w-[110px]" title={step.event}>
                         {step.event}
                       </td>
                       <td className="py-2 px-2.5 truncate max-w-[90px]" title={step.toState || '⊥'}>
                         {step.toState ? (
                           <span className="text-slate-200 font-medium">{step.toState}</span>
                         ) : (
-                          <span className="text-neon-rose font-bold">TRAP ⊥</span>
+                          <span className="text-ruby-400 font-bold">TRAP ⊥</span>
                         )}
                       </td>
                       <td className="py-2 px-2.5">
                         {step.status === 'VALID' ? (
-                          <span className="text-neon-emerald font-bold">OK</span>
+                          <span className="text-mint-400 font-bold">OK</span>
                         ) : (
-                          <span className="text-neon-rose font-bold">VIOLATION</span>
+                          <span className="text-ruby-400 font-bold">VIOLATION</span>
                         )}
                       </td>
                     </tr>

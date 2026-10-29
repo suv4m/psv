@@ -8,22 +8,35 @@ export default {
   theme: {
     extend: {
       colors: {
-        void: {
-          950: '#030712', // Pure obsidian midnight
-          900: '#070d1e', // Panel background
-          850: '#0c142b', // Card background
-          800: '#111c38', // Elevated surface
-          border: '#1a2744',
-          borderActive: '#2563eb',
+        graphite: {
+          950: '#090a0f', // Obsidian graphite background
+          900: '#0f1117', // Panel surface
+          850: '#161922', // Card surface
+          800: '#1e222e', // Elevated element
+          border: '#2a3040', // Base border
+          borderLight: '#3b4358', // Highlight border
         },
-        neon: {
-          blue: '#00d4ff',
-          deep: '#3b82f6',
-          indigo: '#6366f1',
-          purple: '#b55fe6',
-          emerald: '#00ff9d',
-          rose: '#ff2a5f',
-          amber: '#ffb700',
+        gold: {
+          300: '#fde68a',
+          400: '#fbbf24',
+          500: '#f59e0b',
+          600: '#d97706',
+        },
+        mint: {
+          300: '#6ee7b7',
+          400: '#34d399',
+          500: '#10b981',
+          600: '#059669',
+        },
+        amethyst: {
+          300: '#d8b4fe',
+          400: '#c084fc',
+          500: '#a855f7',
+        },
+        ruby: {
+          400: '#fb7185',
+          500: '#f43f5e',
+          600: '#e11d48',
         }
       },
       fontFamily: {
@@ -31,10 +44,10 @@ export default {
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        'neon-blue': '0 0 20px rgba(0, 212, 255, 0.35)',
-        'neon-glow': '0 0 30px rgba(59, 130, 246, 0.25)',
-        'neon-rose': '0 0 20px rgba(255, 42, 95, 0.4)',
-        'neon-emerald': '0 0 20px rgba(0, 255, 157, 0.35)',
+        'gold-glow': '0 0 24px rgba(245, 158, 11, 0.4), inset 0 0 10px rgba(245, 158, 11, 0.15)',
+        'mint-glow': '0 0 24px rgba(16, 185, 129, 0.4), inset 0 0 10px rgba(16, 185, 129, 0.15)',
+        'ruby-glow': '0 0 24px rgba(244, 63, 94, 0.45), inset 0 0 10px rgba(244, 63, 94, 0.15)',
+        'amethyst-glow': '0 0 24px rgba(168, 85, 247, 0.4)',
       }
     },
   },

@@ -4,72 +4,73 @@
 
 @layer base {
   body {
-    background-color: #030712;
-    color: #f1f5f9;
+    background-color: #090a0f;
+    color: #f3f4f6;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 }
 
-/* React Flow Dark Customizations */
+/* React Flow Graphite & Amber Styling */
 .react-flow__background {
-  background-color: #030712 !important;
+  background-color: #090a0f !important;
 }
 
 .react-flow__controls {
-  background: #070d1e !important;
-  border: 1px solid #1a2744 !important;
+  background: #0f1117 !important;
+  border: 1px solid #2a3040 !important;
   border-radius: 8px !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7) !important;
 }
 
 .react-flow__controls-button {
-  background: #070d1e !important;
-  border-bottom: 1px solid #1a2744 !important;
-  fill: #94a3b8 !important;
+  background: #0f1117 !important;
+  border-bottom: 1px solid #2a3040 !important;
+  fill: #9ca3af !important;
 }
 
 .react-flow__controls-button:hover {
-  background: #0c142b !important;
-  fill: #00d4ff !important;
+  background: #161922 !important;
+  fill: #fbbf24 !important;
 }
 
 .react-flow__minimap {
-  background-color: #070d1e !important;
-  border: 1px solid #1a2744 !important;
+  background-color: #0f1117 !important;
+  border: 1px solid #2a3040 !important;
   border-radius: 8px !important;
 }
 
-/* Neon Pulse Keyframes */
-@keyframes neon-pulse-blue {
+/* Gold Pulse Keyframes for Active State */
+@keyframes gold-pulse {
   0% {
-    box-shadow: 0 0 10px rgba(0, 212, 255, 0.4), inset 0 0 8px rgba(0, 212, 255, 0.2);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.4), inset 0 0 8px rgba(245, 158, 11, 0.2);
   }
   50% {
-    box-shadow: 0 0 25px rgba(0, 212, 255, 0.8), inset 0 0 14px rgba(0, 212, 255, 0.35);
+    box-shadow: 0 0 28px rgba(245, 158, 11, 0.8), inset 0 0 14px rgba(245, 158, 11, 0.35);
   }
   100% {
-    box-shadow: 0 0 10px rgba(0, 212, 255, 0.4), inset 0 0 8px rgba(0, 212, 255, 0.2);
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.4), inset 0 0 8px rgba(245, 158, 11, 0.2);
   }
 }
 
-.animate-neon-blue {
-  animation: neon-pulse-blue 2s infinite ease-in-out;
+.animate-gold-pulse {
+  animation: gold-pulse 2s infinite ease-in-out;
 }
 
-@keyframes neon-pulse-rose {
+/* Ruby Pulse Keyframes for Violation */
+@keyframes ruby-pulse {
   0% {
-    box-shadow: 0 0 10px rgba(255, 42, 95, 0.4), inset 0 0 8px rgba(255, 42, 95, 0.2);
+    box-shadow: 0 0 10px rgba(244, 63, 94, 0.4), inset 0 0 8px rgba(244, 63, 94, 0.2);
   }
   50% {
-    box-shadow: 0 0 25px rgba(255, 42, 95, 0.8), inset 0 0 14px rgba(255, 42, 95, 0.4);
+    box-shadow: 0 0 28px rgba(244, 63, 94, 0.85), inset 0 0 14px rgba(244, 63, 94, 0.35);
   }
   100% {
-    box-shadow: 0 0 10px rgba(255, 42, 95, 0.4), inset 0 0 8px rgba(255, 42, 95, 0.2);
+    box-shadow: 0 0 10px rgba(244, 63, 94, 0.4), inset 0 0 8px rgba(244, 63, 94, 0.2);
   }
 }
 
-.animate-neon-rose {
-  animation: neon-pulse-rose 1.6s infinite ease-in-out;
+.animate-ruby-pulse {
+  animation: ruby-pulse 1.6s infinite ease-in-out;
 }
 
 /* Custom Scrollbars */
@@ -79,14 +80,14 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #030712;
+  background: #090a0f;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1a2744;
+  background: #2a3040;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2563eb;
+  background: #d97706;
 }

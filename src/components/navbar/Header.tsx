@@ -18,13 +18,13 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenFormalModal,
 }) => {
   return (
-    <header className="h-14 bg-void-900 border-b border-void-border px-4 flex items-center justify-between select-none shrink-0 shadow-md">
+    <header className="h-14 bg-graphite-900 border-b border-graphite-border px-4 flex items-center justify-between select-none shrink-0 shadow-md">
       {/* Brand Title: Clean, Bold, Minimal */}
       <div className="flex items-center gap-3">
-        <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-600/20 text-neon-blue border border-neon-blue/40 shadow-[0_0_12px_rgba(0,212,255,0.3)]">
-          <Cpu className="w-4 h-4 text-neon-blue" />
+        <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gold-500/15 text-gold-400 border border-gold-400/40 shadow-gold-glow">
+          <Cpu className="w-4 h-4 text-gold-400" />
         </div>
-        <h1 className="text-base font-bold tracking-wider text-white font-mono uppercase bg-gradient-to-r from-white via-slate-100 to-neon-blue bg-clip-text text-transparent">
+        <h1 className="text-base font-bold tracking-wider text-white font-mono uppercase bg-gradient-to-r from-white via-slate-100 to-gold-400 bg-clip-text text-transparent">
           Protocol State Validator
         </h1>
       </div>
@@ -32,7 +32,7 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Protocol Selector & Controls */}
       <div className="flex items-center gap-3">
         {/* Protocol Dropdown */}
-        <div className="flex items-center gap-2 bg-void-850 border border-void-border rounded-lg px-3 py-1.5 focus-within:border-neon-blue transition-colors">
+        <div className="flex items-center gap-2 bg-graphite-850 border border-graphite-border rounded-lg px-3 py-1.5 focus-within:border-gold-400 transition-colors">
           <span className="text-xs font-mono text-slate-400">Protocol:</span>
           <select
             value={currentProtocol.id}
@@ -40,10 +40,10 @@ export const Header: React.FC<HeaderProps> = ({
               const selected = PROTOCOL_PRESETS.find((p) => p.id === e.target.value);
               if (selected) onSelectProtocol(selected);
             }}
-            className="bg-transparent text-sm font-semibold text-neon-blue focus:outline-none cursor-pointer pr-1"
+            className="bg-transparent text-sm font-semibold text-gold-400 focus:outline-none cursor-pointer pr-1"
           >
             {PROTOCOL_PRESETS.map((p) => (
-              <option key={p.id} value={p.id} className="bg-void-900 text-slate-200">
+              <option key={p.id} value={p.id} className="bg-graphite-900 text-slate-200">
                 {p.name}
               </option>
             ))}
@@ -51,7 +51,7 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Protocol Math Cardinalities */}
-        <div className="hidden md:flex items-center gap-2.5 text-xs font-mono text-slate-400 bg-void-950 px-3 py-1.5 rounded-lg border border-void-border">
+        <div className="hidden md:flex items-center gap-2.5 text-xs font-mono text-slate-400 bg-graphite-950 px-3 py-1.5 rounded-lg border border-graphite-border">
           <span>Q: <strong className="text-slate-100 font-bold">{currentProtocol.states.length}</strong></span>
           <span className="text-slate-700">|</span>
           <span>Σ: <strong className="text-slate-100 font-bold">{currentProtocol.alphabet.length}</strong></span>
@@ -62,10 +62,10 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Formal 5-Tuple Button */}
         <button
           onClick={onOpenFormalModal}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-void-850 hover:bg-void-800 text-slate-200 border border-void-border hover:border-neon-blue/60 transition-all text-sm"
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-graphite-850 hover:bg-graphite-800 text-slate-200 border border-graphite-border hover:border-gold-400/60 transition-all text-sm"
           title="View Formal 5-Tuple Definition"
         >
-          <BookOpen className="w-3.5 h-3.5 text-neon-blue" />
+          <BookOpen className="w-3.5 h-3.5 text-gold-400" />
           <span>Formal 5-Tuple</span>
         </button>
       </div>

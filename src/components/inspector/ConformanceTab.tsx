@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { ProtocolDefinition, EventSymbol, ConformanceCoverageReport, ConformanceTestCase } from '../../core/types';
+import { ProtocolDefinition, EventSymbol, ConformanceCoverageReport } from '../../core/types';
 import { FormalDFA } from '../../core/dfa';
 import { ConformanceTestGenerator } from '../../core/generator';
 import {
@@ -34,10 +34,10 @@ export const ConformanceTab: React.FC<ConformanceTabProps> = ({
   return (
     <div className="flex flex-col gap-4 p-4 overflow-y-auto max-h-full">
       {/* Header */}
-      <div className="rounded-xl border border-neon-blue/30 bg-blue-950/20 p-3.5 backdrop-blur-sm">
+      <div className="rounded-xl border border-gold-400/30 bg-amber-950/20 p-3.5 backdrop-blur-sm">
         <div className="flex items-center gap-2 mb-1">
-          <ShieldCheck className="w-4 h-4 text-neon-blue" />
-          <h4 className="text-xs font-bold text-neon-blue font-mono">
+          <ShieldCheck className="w-4 h-4 text-gold-400" />
+          <h4 className="text-xs font-bold text-gold-400 font-mono">
             Automated Conformance Testing Engine
           </h4>
         </div>
@@ -49,44 +49,44 @@ export const ConformanceTab: React.FC<ConformanceTabProps> = ({
       {/* Coverage Gauges Row */}
       <div className="grid grid-cols-2 gap-3">
         {/* State Coverage Card */}
-        <div className="bg-void-850 border border-void-border p-3.5 rounded-xl flex flex-col justify-between shadow-sm">
+        <div className="bg-graphite-850 border border-graphite-border p-3.5 rounded-xl flex flex-col justify-between shadow-sm">
           <div className="flex items-center justify-between text-xs text-slate-400">
             <span>State Coverage (C_state)</span>
-            <Layers className="w-4 h-4 text-neon-blue" />
+            <Layers className="w-4 h-4 text-gold-400" />
           </div>
           <div className="my-2 flex items-baseline gap-2">
-            <span className="text-2xl font-bold font-mono text-neon-blue">
+            <span className="text-2xl font-bold font-mono text-gold-400">
               {report.stateCoveragePct}%
             </span>
             <span className="text-xs font-mono text-slate-400">
               ({report.coveredStates.length}/{report.totalStates})
             </span>
           </div>
-          <div className="w-full bg-void-950 h-2 rounded-full overflow-hidden">
+          <div className="w-full bg-graphite-950 h-2 rounded-full overflow-hidden">
             <div
-              className="bg-neon-blue h-full rounded-full transition-all duration-500 shadow-neon-blue"
+              className="bg-gold-500 h-full rounded-full transition-all duration-500 shadow-gold-glow"
               style={{ width: `${report.stateCoveragePct}%` }}
             />
           </div>
         </div>
 
         {/* Transition Coverage Card */}
-        <div className="bg-void-850 border border-void-border p-3.5 rounded-xl flex flex-col justify-between shadow-sm">
+        <div className="bg-graphite-850 border border-graphite-border p-3.5 rounded-xl flex flex-col justify-between shadow-sm">
           <div className="flex items-center justify-between text-xs text-slate-400">
             <span>Transition Cover (C_trans)</span>
-            <Activity className="w-4 h-4 text-neon-emerald" />
+            <Activity className="w-4 h-4 text-mint-400" />
           </div>
           <div className="my-2 flex items-baseline gap-2">
-            <span className="text-2xl font-bold font-mono text-neon-emerald">
+            <span className="text-2xl font-bold font-mono text-mint-400">
               {report.transitionCoveragePct}%
             </span>
             <span className="text-xs font-mono text-slate-400">
               ({report.coveredTransitions.length}/{report.totalTransitions})
             </span>
           </div>
-          <div className="w-full bg-void-950 h-2 rounded-full overflow-hidden">
+          <div className="w-full bg-graphite-950 h-2 rounded-full overflow-hidden">
             <div
-              className="bg-neon-emerald h-full rounded-full transition-all duration-500 shadow-neon-emerald"
+              className="bg-mint-500 h-full rounded-full transition-all duration-500 shadow-mint-glow"
               style={{ width: `${report.transitionCoveragePct}%` }}
             />
           </div>
@@ -99,8 +99,8 @@ export const ConformanceTab: React.FC<ConformanceTabProps> = ({
           onClick={() => setFilterType('ALL')}
           className={`px-3 py-1 text-xs rounded-lg font-semibold transition-all ${
             filterType === 'ALL'
-              ? 'bg-blue-600 text-white shadow-neon-blue'
-              : 'bg-void-850 text-slate-400 border border-void-border hover:text-slate-200'
+              ? 'bg-gold-500 text-graphite-950 font-bold shadow-gold-glow'
+              : 'bg-graphite-850 text-slate-400 border border-graphite-border hover:text-slate-200'
           }`}
         >
           All ({report.testCases.length})
@@ -109,8 +109,8 @@ export const ConformanceTab: React.FC<ConformanceTabProps> = ({
           onClick={() => setFilterType('POSITIVE_HAPPY_PATH')}
           className={`px-3 py-1 text-xs rounded-lg font-semibold transition-all ${
             filterType === 'POSITIVE_HAPPY_PATH'
-              ? 'bg-emerald-500/20 text-neon-emerald border border-neon-emerald font-bold'
-              : 'bg-void-850 text-slate-400 border border-void-border hover:text-neon-emerald'
+              ? 'bg-mint-500/20 text-mint-400 border border-mint-500 font-bold'
+              : 'bg-graphite-850 text-slate-400 border border-graphite-border hover:text-mint-400'
           }`}
         >
           Happy Paths
@@ -119,8 +119,8 @@ export const ConformanceTab: React.FC<ConformanceTabProps> = ({
           onClick={() => setFilterType('BOUNDARY_CYCLE')}
           className={`px-3 py-1 text-xs rounded-lg font-semibold transition-all ${
             filterType === 'BOUNDARY_CYCLE'
-              ? 'bg-blue-500/20 text-neon-blue border border-neon-blue font-bold'
-              : 'bg-void-850 text-slate-400 border border-void-border hover:text-neon-blue'
+              ? 'bg-gold-500/20 text-gold-400 border border-gold-400 font-bold'
+              : 'bg-graphite-850 text-slate-400 border border-graphite-border hover:text-gold-400'
           }`}
         >
           Edges & Cycles
@@ -129,8 +129,8 @@ export const ConformanceTab: React.FC<ConformanceTabProps> = ({
           onClick={() => setFilterType('ADVERSARIAL_MUTATION')}
           className={`px-3 py-1 text-xs rounded-lg font-semibold transition-all ${
             filterType === 'ADVERSARIAL_MUTATION'
-              ? 'bg-rose-500/20 text-neon-rose border border-neon-rose font-bold'
-              : 'bg-void-850 text-slate-400 border border-void-border hover:text-neon-rose'
+              ? 'bg-ruby-500/20 text-ruby-400 border border-ruby-500 font-bold'
+              : 'bg-graphite-850 text-slate-400 border border-graphite-border hover:text-ruby-400'
           }`}
         >
           Negative Fuzz
@@ -145,7 +145,7 @@ export const ConformanceTab: React.FC<ConformanceTabProps> = ({
           return (
             <div
               key={tc.id}
-              className="bg-void-850 border border-void-border rounded-xl p-3.5 hover:border-neon-blue/40 transition-all flex flex-col gap-2.5 shadow-sm"
+              className="bg-graphite-850 border border-graphite-border rounded-xl p-3.5 hover:border-gold-400/40 transition-all flex flex-col gap-2.5 shadow-sm"
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="space-y-1">
@@ -156,8 +156,8 @@ export const ConformanceTab: React.FC<ConformanceTabProps> = ({
                     <span
                       className={`px-2 py-0.5 text-xs font-mono rounded font-bold border ${
                         isExpectedAccept
-                          ? 'bg-emerald-500/15 text-neon-emerald border-neon-emerald/40'
-                          : 'bg-rose-500/15 text-neon-rose border-neon-rose/40'
+                          ? 'bg-mint-500/15 text-mint-400 border-mint-500/40'
+                          : 'bg-ruby-500/15 text-ruby-400 border-ruby-500/40'
                       }`}
                     >
                       {tc.expectedOutcome}
@@ -171,7 +171,7 @@ export const ConformanceTab: React.FC<ConformanceTabProps> = ({
 
                 <button
                   onClick={() => onRunTestCase(tc.trace)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-neon-blue text-void-950 font-bold text-xs hover:bg-cyan-300 transition-all shadow-neon-blue shrink-0"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gold-500 text-graphite-950 font-bold text-xs hover:bg-gold-400 transition-all shadow-gold-glow shrink-0"
                   title="Run this test in verifier"
                 >
                   <span>Run</span>
@@ -188,7 +188,7 @@ export const ConformanceTab: React.FC<ConformanceTabProps> = ({
                 {tc.trace.map((evt, idx) => (
                   <span
                     key={`${tc.id}-tok-${idx}`}
-                    className="px-2 py-0.5 bg-void-950 border border-void-border text-xs font-mono text-slate-300 rounded shrink-0"
+                    className="px-2 py-0.5 bg-graphite-950 border border-graphite-border text-xs font-mono text-slate-300 rounded shrink-0"
                   >
                     {evt}
                   </span>

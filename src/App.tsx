@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
-import { ProtocolDefinition, ValidationResult, EventSymbol, StateId } from './core/types';
+import { ProtocolDefinition, ValidationResult, EventSymbol } from './core/types';
 import { PROTOCOL_PRESETS } from './core/presets';
 import { FormalDFA } from './core/dfa';
 import { TraceVerifier } from './core/verifier';
@@ -11,7 +11,7 @@ import { TraceVerifierTab } from './components/inspector/TraceVerifierTab';
 import { ConformanceTab } from './components/inspector/ConformanceTab';
 import { LogIngestTab } from './components/inspector/LogIngestTab';
 import { FormalSpecTab } from './components/inspector/FormalSpecTab';
-import { PlayCircle, ShieldCheck, FileText, Code2, GripVertical, GripHorizontal } from 'lucide-react';
+import { PlayCircle, ShieldCheck, FileText, Code2 } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [currentProtocol, setCurrentProtocol] = useState<ProtocolDefinition>(PROTOCOL_PRESETS[0]);
@@ -132,7 +132,7 @@ export const App: React.FC = () => {
   }, [validationResult, currentStepIndex, currentProtocol]);
 
   return (
-    <div className="flex flex-col h-screen w-screen bg-void-950 text-slate-100 overflow-hidden font-sans select-none">
+    <div className="flex flex-col h-screen w-screen bg-graphite-950 text-slate-100 overflow-hidden font-sans select-none">
       {/* Top Header */}
       <Header
         currentProtocol={currentProtocol}
@@ -156,28 +156,28 @@ export const App: React.FC = () => {
         {/* VS Code Style Horizontal Sliding Bar (Resize Inspector Sidebar) */}
         <div
           onMouseDown={handleMouseDownSidebar}
-          className="w-1.5 hover:w-2 bg-void-border hover:bg-neon-blue active:bg-neon-blue cursor-col-resize transition-all duration-150 relative z-30 group flex items-center justify-center shrink-0"
+          className="w-1.5 hover:w-2 bg-graphite-border hover:bg-gold-500 active:bg-gold-500 cursor-col-resize transition-all duration-150 relative z-30 group flex items-center justify-center shrink-0"
           title="Drag to resize inspector panel"
         >
-          <div className="w-1 h-8 rounded-full bg-slate-600 group-hover:bg-void-950 transition-colors" />
+          <div className="w-1 h-8 rounded-full bg-slate-600 group-hover:bg-graphite-950 transition-colors" />
         </div>
 
         {/* Right: Inspector Workbench Dock */}
         <div
           style={{ width: `${sidebarWidth}px` }}
-          className="h-full bg-void-900 flex flex-col shrink-0 overflow-hidden"
+          className="h-full bg-graphite-900 flex flex-col shrink-0 overflow-hidden"
         >
           {/* Tab Navigation */}
-          <div className="flex items-center border-b border-void-border bg-void-850 px-2 pt-1 select-none">
+          <div className="flex items-center border-b border-graphite-border bg-graphite-850 px-2 pt-1 select-none">
             <button
               onClick={() => setActiveTab('VERIFIER')}
               className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold border-b-2 transition-all ${
                 activeTab === 'VERIFIER'
-                  ? 'border-neon-blue text-neon-blue bg-void-900 rounded-t-lg'
+                  ? 'border-gold-400 text-gold-400 bg-graphite-900 rounded-t-lg font-bold'
                   : 'border-transparent text-slate-400 hover:text-slate-200'
               }`}
             >
-              <PlayCircle className="w-4 h-4 text-neon-blue" />
+              <PlayCircle className="w-4 h-4 text-gold-400" />
               <span>Trace Verifier</span>
             </button>
 
@@ -185,11 +185,11 @@ export const App: React.FC = () => {
               onClick={() => setActiveTab('CONFORMANCE')}
               className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold border-b-2 transition-all ${
                 activeTab === 'CONFORMANCE'
-                  ? 'border-neon-blue text-neon-blue bg-void-900 rounded-t-lg'
+                  ? 'border-gold-400 text-gold-400 bg-graphite-900 rounded-t-lg font-bold'
                   : 'border-transparent text-slate-400 hover:text-slate-200'
               }`}
             >
-              <ShieldCheck className="w-4 h-4 text-neon-emerald" />
+              <ShieldCheck className="w-4 h-4 text-mint-400" />
               <span>Conformance</span>
             </button>
 
@@ -197,7 +197,7 @@ export const App: React.FC = () => {
               onClick={() => setActiveTab('LOG_INGEST')}
               className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold border-b-2 transition-all ${
                 activeTab === 'LOG_INGEST'
-                  ? 'border-neon-blue text-neon-blue bg-void-900 rounded-t-lg'
+                  ? 'border-gold-400 text-gold-400 bg-graphite-900 rounded-t-lg font-bold'
                   : 'border-transparent text-slate-400 hover:text-slate-200'
               }`}
             >
@@ -209,11 +209,11 @@ export const App: React.FC = () => {
               onClick={() => setActiveTab('FORMAL_SPEC')}
               className={`flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold border-b-2 transition-all ${
                 activeTab === 'FORMAL_SPEC'
-                  ? 'border-neon-blue text-neon-blue bg-void-900 rounded-t-lg'
+                  ? 'border-gold-400 text-gold-400 bg-graphite-900 rounded-t-lg font-bold'
                   : 'border-transparent text-slate-400 hover:text-slate-200'
               }`}
             >
-              <Code2 className="w-4 h-4 text-neon-purple" />
+              <Code2 className="w-4 h-4 text-amethyst-400" />
               <span>5-Tuple</span>
             </button>
           </div>
@@ -257,10 +257,10 @@ export const App: React.FC = () => {
       {/* VS Code Style Vertical Sliding Bar (Resize Bottom Timeline/Terminal) */}
       <div
         onMouseDown={handleMouseDownBottom}
-        className="h-1.5 hover:h-2 bg-void-border hover:bg-neon-blue active:bg-neon-blue cursor-row-resize transition-all duration-150 relative z-30 group flex items-center justify-center shrink-0"
+        className="h-1.5 hover:h-2 bg-graphite-border hover:bg-gold-500 active:bg-gold-500 cursor-row-resize transition-all duration-150 relative z-30 group flex items-center justify-center shrink-0"
         title="Drag up to expand terminal/timeline panel (like in VS Code)"
       >
-        <div className="w-10 h-1 rounded-full bg-slate-600 group-hover:bg-void-950 transition-colors" />
+        <div className="w-10 h-1 rounded-full bg-slate-600 group-hover:bg-graphite-950 transition-colors" />
       </div>
 
       {/* Bottom Timeline Playback Scrubber Bar (Resizable) */}

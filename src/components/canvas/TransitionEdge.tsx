@@ -35,15 +35,15 @@ export const TransitionEdge: React.FC<EdgeProps> = memo(({
     borderRadius: 20,
   });
 
-  let strokeColor = '#2b3d63';
+  let strokeColor = '#3b4358';
   let strokeWidth = 2.2;
   let strokeDasharray = undefined;
 
   if (isFailed) {
-    strokeColor = '#ff2a5f';
+    strokeColor = '#f43f5e';
     strokeWidth = 3.2;
   } else if (isActive) {
-    strokeColor = '#00d4ff';
+    strokeColor = '#fbbf24';
     strokeWidth = 3.5;
     strokeDasharray = '6 6';
   }
@@ -60,9 +60,9 @@ export const TransitionEdge: React.FC<EdgeProps> = memo(({
           strokeDasharray,
           transition: 'all 0.25s ease',
           filter: isActive
-            ? 'drop-shadow(0 0 8px rgba(0, 212, 255, 0.7))'
+            ? 'drop-shadow(0 0 8px rgba(251, 191, 36, 0.75))'
             : isFailed
-            ? 'drop-shadow(0 0 8px rgba(255, 42, 95, 0.7))'
+            ? 'drop-shadow(0 0 8px rgba(244, 63, 94, 0.75))'
             : undefined,
         }}
       />
@@ -78,10 +78,10 @@ export const TransitionEdge: React.FC<EdgeProps> = memo(({
           <div
             className={`px-2.5 py-1 rounded-md font-mono text-xs font-semibold border shadow-md transition-all duration-300 backdrop-blur-md ${
               isFailed
-                ? 'bg-[#1e0811] text-neon-rose border-neon-rose shadow-[0_0_12px_rgba(255,42,95,0.5)] font-bold scale-105'
+                ? 'bg-[#2a0e14] text-ruby-400 border-ruby-500 shadow-ruby-glow font-bold scale-105'
                 : isActive
-                ? 'bg-[#041a2f] text-neon-blue border-neon-blue shadow-[0_0_16px_rgba(0,212,255,0.6)] font-bold scale-110 ring-1 ring-neon-blue/60'
-                : 'bg-void-900/95 text-slate-300 border-void-border hover:border-neon-blue/50 hover:text-white'
+                ? 'bg-[#291804] text-gold-400 border-gold-400 shadow-gold-glow font-bold scale-110 ring-1 ring-gold-400/60'
+                : 'bg-graphite-900/95 text-slate-300 border-graphite-border hover:border-gold-400/50 hover:text-white'
             }`}
             title={`Transition event: ${event}`}
           >
