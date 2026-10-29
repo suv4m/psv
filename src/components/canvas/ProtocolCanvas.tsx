@@ -19,7 +19,7 @@ import dagre from 'dagre';
 import { ProtocolDefinition, StateId } from '../../core/types';
 import { StateNode, StateNodeData } from './StateNode';
 import { TransitionEdge, TransitionEdgeData } from './TransitionEdge';
-import { Maximize2, LayoutGrid, Move } from 'lucide-react';
+import { Maximize2, LayoutGrid } from 'lucide-react';
 
 const nodeTypes = {
   stateNode: StateNode,
@@ -221,10 +221,10 @@ const CanvasInner: React.FC<ProtocolCanvasProps> = ({
         <button
           onClick={toggleDirection}
           className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-gold-400 hover:bg-graphite-850 rounded transition-colors"
-          title="Toggle Layout Orientation (Horizontal LR vs Vertical TB)"
+          title="Toggle Layout Orientation (Horizontal vs Vertical)"
         >
           <LayoutGrid className="w-3.5 h-3.5 text-gold-400" />
-          <span>Layout: {direction === 'LR' ? 'Horizontal' : 'Vertical'}</span>
+          <span>{direction === 'LR' ? 'Horizontal' : 'Vertical'}</span>
         </button>
 
         <div className="w-[1px] h-4 bg-graphite-border" />
@@ -236,13 +236,6 @@ const CanvasInner: React.FC<ProtocolCanvasProps> = ({
         >
           <Maximize2 className="w-4 h-4 text-slate-300" />
         </button>
-
-        <div className="w-[1px] h-4 bg-graphite-border" />
-
-        <div className="flex items-center gap-1 text-[11px] text-slate-400 px-1 font-mono" title="Two-finger scroll on trackpad enabled for panning">
-          <Move className="w-3 h-3 text-gold-400" />
-          <span className="hidden sm:inline">2-Finger Pan</span>
-        </div>
       </div>
 
       {/* Clean Legend */}

@@ -205,7 +205,7 @@ export const TraceScrubber: React.FC<TraceScrubberProps> = ({
 
       {/* Step Event Tokens Trail */}
       {validationResult && validationResult.history.length > 0 && (
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-0.5 scrollbar-thin">
+        <div className="flex items-center gap-1.5 overflow-x-auto py-1 scrollbar-thin">
           <button
             onClick={() => {
               setIsPlaying(false);

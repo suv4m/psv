@@ -34,7 +34,7 @@ export const ConformanceTab: React.FC<ConformanceTabProps> = ({
   return (
     <div className="flex flex-col gap-4 p-4 overflow-y-auto max-h-full">
       {/* Header */}
-      <div className="rounded-xl border border-gold-400/30 bg-amber-950/20 p-3.5 backdrop-blur-sm">
+      <div className="rounded-xl border border-gold-400/30 bg-amber-950/20 p-3.5 backdrop-blur-sm shrink-0">
         <div className="flex items-center gap-2 mb-1">
           <ShieldCheck className="w-4 h-4 text-gold-400" />
           <h4 className="text-xs font-bold text-gold-400 font-mono">
@@ -47,7 +47,7 @@ export const ConformanceTab: React.FC<ConformanceTabProps> = ({
       </div>
 
       {/* Coverage Gauges Row */}
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-3 shrink-0">
         {/* State Coverage Card */}
         <div className="bg-graphite-850 border border-graphite-border p-3.5 rounded-xl flex flex-col justify-between shadow-sm">
           <div className="flex items-center justify-between text-xs text-slate-400">
@@ -93,44 +93,44 @@ export const ConformanceTab: React.FC<ConformanceTabProps> = ({
         </div>
       </div>
 
-      {/* Filter Tabs */}
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
+      {/* Filter Tabs (Clean Flex-Wrap so they never clip or hide) */}
+      <div className="flex items-center gap-2 flex-wrap shrink-0 py-1">
         <button
           onClick={() => setFilterType('ALL')}
-          className={`px-3 py-1 text-xs rounded-lg font-semibold transition-all ${
+          className={`px-3 py-1.5 text-xs rounded-lg font-semibold shrink-0 transition-all ${
             filterType === 'ALL'
               ? 'bg-gold-500 text-graphite-950 font-bold shadow-gold-glow'
-              : 'bg-graphite-850 text-slate-400 border border-graphite-border hover:text-slate-200'
+              : 'bg-graphite-850 text-slate-300 border border-graphite-border hover:text-white hover:border-gold-400/50'
           }`}
         >
           All ({report.testCases.length})
         </button>
         <button
           onClick={() => setFilterType('POSITIVE_HAPPY_PATH')}
-          className={`px-3 py-1 text-xs rounded-lg font-semibold transition-all ${
+          className={`px-3 py-1.5 text-xs rounded-lg font-semibold shrink-0 transition-all ${
             filterType === 'POSITIVE_HAPPY_PATH'
               ? 'bg-mint-500/20 text-mint-400 border border-mint-500 font-bold'
-              : 'bg-graphite-850 text-slate-400 border border-graphite-border hover:text-mint-400'
+              : 'bg-graphite-850 text-slate-300 border border-graphite-border hover:text-mint-400'
           }`}
         >
           Happy Paths
         </button>
         <button
           onClick={() => setFilterType('BOUNDARY_CYCLE')}
-          className={`px-3 py-1 text-xs rounded-lg font-semibold transition-all ${
+          className={`px-3 py-1.5 text-xs rounded-lg font-semibold shrink-0 transition-all ${
             filterType === 'BOUNDARY_CYCLE'
               ? 'bg-gold-500/20 text-gold-400 border border-gold-400 font-bold'
-              : 'bg-graphite-850 text-slate-400 border border-graphite-border hover:text-gold-400'
+              : 'bg-graphite-850 text-slate-300 border border-graphite-border hover:text-gold-400'
           }`}
         >
           Edges & Cycles
         </button>
         <button
           onClick={() => setFilterType('ADVERSARIAL_MUTATION')}
-          className={`px-3 py-1 text-xs rounded-lg font-semibold transition-all ${
+          className={`px-3 py-1.5 text-xs rounded-lg font-semibold shrink-0 transition-all ${
             filterType === 'ADVERSARIAL_MUTATION'
               ? 'bg-ruby-500/20 text-ruby-400 border border-ruby-500 font-bold'
-              : 'bg-graphite-850 text-slate-400 border border-graphite-border hover:text-ruby-400'
+              : 'bg-graphite-850 text-slate-300 border border-graphite-border hover:text-ruby-400'
           }`}
         >
           Negative Fuzz
@@ -184,7 +184,7 @@ export const ConformanceTab: React.FC<ConformanceTabProps> = ({
               </p>
 
               {/* Tokens Preview */}
-              <div className="flex items-center gap-1.5 overflow-x-auto py-1 scrollbar-thin">
+              <div className="flex items-center gap-1.5 overflow-x-auto py-1.5 scrollbar-thin">
                 {tc.trace.map((evt, idx) => (
                   <span
                     key={`${tc.id}-tok-${idx}`}

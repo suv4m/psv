@@ -32,8 +32,7 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Protocol Selector & Controls */}
       <div className="flex items-center gap-3">
         {/* Protocol Dropdown */}
-        <div className="flex items-center gap-2 bg-graphite-850 border border-graphite-border rounded-lg px-3 py-1.5 focus-within:border-gold-400 transition-colors">
-          <span className="text-xs font-mono text-slate-400">Protocol:</span>
+        <div className="flex items-center gap-1.5 bg-graphite-850 border border-graphite-border rounded-lg px-2.5 py-1.5 focus-within:border-gold-400 transition-colors">
           <select
             value={currentProtocol.id}
             onChange={(e) => {
