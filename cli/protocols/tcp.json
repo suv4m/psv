@@ -1,0 +1,37 @@
+{
+  "id": "tcp-rfc793",
+  "name": "TCP State Machine (RFC 793)",
+  "initialState": "CLOSED",
+  "finalStates": ["CLOSED"],
+  "states": [
+    "CLOSED", "LISTEN", "SYN_SENT", "SYN_RCVD", "ESTABLISHED",
+    "FIN_WAIT_1", "FIN_WAIT_2", "CLOSING", "TIME_WAIT", "CLOSE_WAIT", "LAST_ACK"
+  ],
+  "alphabet": [
+    "PASSIVE_OPEN", "ACTIVE_OPEN", "SEND_SYN", "RCV_SYN", "RCV_SYN_ACK",
+    "SEND_SYN_ACK", "SEND_ACK", "RCV_ACK", "SEND_DATA", "RCV_DATA",
+    "CLOSE_APP", "RCV_FIN", "SEND_FIN", "TIMEOUT_2MSL", "SEND_RST"
+  ],
+  "transitions": [
+    { "from": "CLOSED", "event": "PASSIVE_OPEN", "to": "LISTEN" },
+    { "from": "LISTEN", "event": "RCV_SYN", "to": "SYN_RCVD" },
+    { "from": "SYN_RCVD", "event": "SEND_SYN_ACK", "to": "SYN_RCVD" },
+    { "from": "SYN_RCVD", "event": "RCV_ACK", "to": "ESTABLISHED" },
+    { "from": "CLOSED", "event": "ACTIVE_OPEN", "to": "SYN_SENT" },
+    { "from": "SYN_SENT", "event": "RCV_SYN_ACK", "to": "ESTABLISHED" },
+    { "from": "SYN_SENT", "event": "CLOSE_APP", "to": "CLOSED" },
+    { "from": "ESTABLISHED", "event": "SEND_DATA", "to": "ESTABLISHED" },
+    { "from": "ESTABLISHED", "event": "RCV_DATA", "to": "ESTABLISHED" },
+    { "from": "ESTABLISHED", "event": "CLOSE_APP", "to": "FIN_WAIT_1" },
+    { "from": "FIN_WAIT_1", "event": "RCV_ACK", "to": "FIN_WAIT_2" },
+    { "from": "FIN_WAIT_2", "event": "RCV_FIN", "to": "TIME_WAIT" },
+    { "from": "FIN_WAIT_1", "event": "RCV_FIN", "to": "CLOSING" },
+    { "from": "CLOSING", "event": "RCV_ACK", "to": "TIME_WAIT" },
+    { "from": "TIME_WAIT", "event": "TIMEOUT_2MSL", "to": "CLOSED" },
+    { "from": "ESTABLISHED", "event": "RCV_FIN", "to": "CLOSE_WAIT" },
+    { "from": "CLOSE_WAIT", "event": "CLOSE_APP", "to": "LAST_ACK" },
+    { "from": "LAST_ACK", "event": "RCV_ACK", "to": "CLOSED" },
+    { "from": "SYN_RCVD", "event": "SEND_RST", "to": "LISTEN" },
+    { "from": "ESTABLISHED", "event": "SEND_RST", "to": "CLOSED" }
+  ]
+}
